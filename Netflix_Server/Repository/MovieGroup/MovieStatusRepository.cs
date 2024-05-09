@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Netflix_Server.IRepositorys;
+using Netflix_Server.IRepository;
+using Netflix_Server.Models.Context;
 using Netflix_Server.Models.MovieGroup;
-using Netflix_Server.Models.MovieGroup.Context;
+
 
 namespace Netflix_Server.Repository.MovieGroup
 {
