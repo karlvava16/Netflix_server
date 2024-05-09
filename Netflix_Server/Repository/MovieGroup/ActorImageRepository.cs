@@ -31,7 +31,7 @@ namespace Netflix_Server.Repository.MovieGroup
                 _context.ActorImages.Remove(actorImage);
             }
         }
-
+        //Сделал
         public async Task<bool> Exists(int id)
         {
             return await _context.ActorImages.AnyAsync(ai => ai.Id == id);
