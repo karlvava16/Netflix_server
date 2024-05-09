@@ -1,4 +1,4 @@
-﻿namespace Netflix_Server.Models
+﻿namespace Netflix_Server.Models.MovieGroup
 {
     public class Playback
     {

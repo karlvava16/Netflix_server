@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Netflix_Server.Models;
+using Netflix_Server.Models.MovieGroup;
+using Netflix_Server.Models.MovieGroup.Context;
 
 #nullable disable
 

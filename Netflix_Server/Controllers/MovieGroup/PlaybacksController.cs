@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Netflix_Server.IRepositorys;
-using Netflix_Server.Models;
+using Netflix_Server.Models.MovieGroup;
 using Netflix_Server.Repository;
 
-namespace Netflix_Server.Controllers
+namespace Netflix_Server.Controllers.MovieGroup
 {
     [Route("api/[controller]")]
     [ApiController]

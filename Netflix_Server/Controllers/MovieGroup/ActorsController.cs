@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Netflix_Server.Models;
-using Netflix_Server.Repository;
+using Netflix_Server.Models.MovieGroup;
+using Netflix_Server.Repository.MovieGroup;
 
-namespace Netflix_Server.Controllers
+namespace Netflix_Server.Controllers.MovieGroup
 {
     [Route("api/[controller]")]
     [ApiController]
