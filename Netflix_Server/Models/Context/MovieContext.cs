@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Netflix_Server.Models.MovieGroup;
-namespace Netflix_Server.Models.MovieGroup.Context
+using Netflix_Server.Models.UserGroup;
+namespace Netflix_Server.Models.Context
 {
 
 
@@ -19,6 +20,11 @@ namespace Netflix_Server.Models.MovieGroup.Context
         public DbSet<Actor> MovieActors { get; set; }
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Playback> Playbacks { get; set; } = default!;
+
+
+        public DbSet<Feature> Features { get; set; } 
+        public DbSet<PricingPlan> PricingPlans { get; set; }
+        public DbSet<User> Users { get; set; }
 
     }
 
