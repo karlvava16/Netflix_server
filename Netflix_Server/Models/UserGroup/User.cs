@@ -1,4 +1,6 @@
-﻿namespace Netflix_Server.Models.UserGroup
+﻿using Netflix_Server.Models.MovieGroup;
+
+namespace Netflix_Server.Models.UserGroup
 {
     public class User
     {
@@ -10,5 +12,6 @@
         public DateTime? RegistrationDate { get; set; } 
         public PricingPlan? PricingPlan { get; set; }
         public int PricingPlanId { get; set; }
+        public ICollection<Movie> WatchedMovies { get; set; }
     }
 }
