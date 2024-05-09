@@ -1,4 +1,4 @@
-﻿namespace Netflix_Server.IRepositorys
+﻿namespace Netflix_Server.IRepository
 {
     public interface IRepository<T> where T : class
     {
@@ -13,7 +13,5 @@
         Task Save();
 
         Task<bool> Exists(int id);
-
-
     }
 }

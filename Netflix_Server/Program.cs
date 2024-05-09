@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Netflix_Server.Models.MovieGroup.Context;
+using Netflix_Server.Models.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
