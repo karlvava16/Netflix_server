@@ -13,7 +13,5 @@
         Task Save();
 
         Task<bool> Exists(int id);
-
-
     }
 }
