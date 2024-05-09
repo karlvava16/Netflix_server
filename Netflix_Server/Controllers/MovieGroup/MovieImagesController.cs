@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Netflix_Server.IRepositorys;
 using Netflix_Server.Models.MovieGroup;
 using Netflix_Server.Repository;
+using Netflix_Server.Repository.MovieGroup;
 
 namespace Netflix_Server.Controllers.MovieGroup
 {
@@ -12,9 +13,9 @@ namespace Netflix_Server.Controllers.MovieGroup
     [ApiController]
     public class MovieImagesController : ControllerBase
     {
-        private readonly IRepository<MovieImage> _movieImageRepository;
+        private readonly MovieImageRepository _movieImageRepository;
 
-        public MovieImagesController(IRepository<MovieImage> movieImageRepository)
+        public MovieImagesController(MovieImageRepository movieImageRepository)
         {
             _movieImageRepository = movieImageRepository;
         }

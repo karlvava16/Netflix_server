@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Netflix_Server.IRepositorys;
 using Netflix_Server.Models.MovieGroup;
 using Netflix_Server.Repository;
+using Netflix_Server.Repository.MovieGroup;
 
 namespace Netflix_Server.Controllers.MovieGroup
 {
@@ -11,9 +12,9 @@ namespace Netflix_Server.Controllers.MovieGroup
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        private readonly IRepository<Movie> _movieRepository;
+        private readonly MovieRepository _movieRepository;
 
-        public MoviesController(IRepository<Movie> movieRepository)
+        public MoviesController(MovieRepository movieRepository)
         {
             _movieRepository = movieRepository;
         }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Netflix_Server.IRepositorys;
 using Netflix_Server.Models.MovieGroup;
 using Netflix_Server.Repository;
+using Netflix_Server.Repository.MovieGroup;
 
 namespace Netflix_Server.Controllers.MovieGroup
 {
@@ -11,9 +12,9 @@ namespace Netflix_Server.Controllers.MovieGroup
     [ApiController]
     public class PlaybacksController : ControllerBase
     {
-        private readonly IRepository<Playback> _playbackRepository;
+        private readonly PlaybackRepository _playbackRepository;
 
-        public PlaybacksController(IRepository<Playback> playbackRepository)
+        public PlaybacksController(PlaybackRepository playbackRepository)
         {
             _playbackRepository = playbackRepository;
         }
