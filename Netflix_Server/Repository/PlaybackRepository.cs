@@ -3,14 +3,9 @@ using Netflix_Server.Models;
 
 namespace Netflix_Server.Repository
 {
-    public class MovieRepository : IRepository<Movie>
+    public class PlaybackRepository : IRepository<Playback>
     {
-        private readonly MovieContext _context;
-        public MovieRepository(MovieContext context)
-        {
-            _context = context;
-        }
-        public Task Create(Movie item)
+        public Task Create(Playback item)
         {
             throw new NotImplementedException();
         }
@@ -20,17 +15,17 @@ namespace Netflix_Server.Repository
             throw new NotImplementedException();
         }
 
-        public Task<Movie> GetById(int id)
+        public Task<Playback> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Movie> GetByName(string name)
+        public Task<Playback> GetByName(string name)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Movie>> GetList()
+        public Task<List<Playback>> GetList()
         {
             throw new NotImplementedException();
         }
@@ -40,10 +35,9 @@ namespace Netflix_Server.Repository
             throw new NotImplementedException();
         }
 
-        public void Update(Movie item)
+        public void Update(Playback item)
         {
             throw new NotImplementedException();
         }
-
     }
 }
