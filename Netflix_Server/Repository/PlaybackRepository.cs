@@ -1,43 +1,64 @@
-﻿using Netflix_Server.IRepositorys;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Netflix_Server.IRepositorys;
 using Netflix_Server.Models;
 
 namespace Netflix_Server.Repository
 {
     public class PlaybackRepository : IRepository<Playback>
     {
-        public Task Create(Playback item)
+        private readonly MovieContext _context;
+
+        public PlaybackRepository(MovieContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task Delete(int id)
+        public async Task Create(Playback item)
         {
-            throw new NotImplementedException();
+            await _context.Playbacks.AddAsync(item);
         }
 
-        public Task<Playback> GetById(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var playback = await GetById(id);
+            if (playback != null)
+            {
+                _context.Playbacks.Remove(playback);
+            }
         }
 
-        public Task<Playback> GetByName(string name)
+        public async Task<bool> Exists(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Playbacks.AnyAsync(p => p.Id == id);
         }
 
-        public Task<List<Playback>> GetList()
+        public async Task<Playback> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Playbacks.FindAsync(id);
         }
 
-        public Task Save()
+        public async Task<Playback> GetByName(string name)
         {
-            throw new NotImplementedException();
+            return await _context.Playbacks.FirstOrDefaultAsync(p => p.Path == name);
+        }
+
+        public async Task<List<Playback>> GetList()
+        {
+            return await _context.Playbacks.ToListAsync();
+        }
+
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
         }
 
         public void Update(Playback item)
         {
-            throw new NotImplementedException();
+            _context.Playbacks.Update(item);
         }
     }
 }

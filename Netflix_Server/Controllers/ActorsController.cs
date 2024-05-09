@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Netflix_Server.Models;
+using Netflix_Server.Repository;
 
 namespace Netflix_Server.Controllers
 {
@@ -13,25 +14,25 @@ namespace Netflix_Server.Controllers
     [ApiController]
     public class ActorsController : ControllerBase
     {
-        private readonly MovieContext _context;
+        private readonly ActorRepository _actorRepository;
 
-        public ActorsController(MovieContext context)
+        public ActorsController(ActorRepository repo)
         {
-            _context = context;
+            _actorRepository = repo;
         }
 
         // GET: api/Actors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Actor>>> GetMovieActors()
+        public async Task<ActionResult<IEnumerable<Actor>>> GetActors()
         {
-            return await _context.MovieActors.ToListAsync();
+            return await _actorRepository.GetList();
         }
 
         // GET: api/Actors/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Actor>> GetActor(int id)
         {
-            var actor = await _context.MovieActors.FindAsync(id);
+            var actor = await _actorRepository.GetById(id);
 
             if (actor == null)
             {
@@ -42,7 +43,6 @@ namespace Netflix_Server.Controllers
         }
 
         // PUT: api/Actors/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutActor(int id, Actor actor)
         {
@@ -51,34 +51,25 @@ namespace Netflix_Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(actor).State = EntityState.Modified;
+            _actorRepository.Update(actor);
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _actorRepository.Save();
             }
-            catch (DbUpdateConcurrencyException)
+            catch
             {
-                if (!ActorExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
         }
 
         // POST: api/Actors
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Actor>> PostActor(Actor actor)
         {
-            _context.MovieActors.Add(actor);
-            await _context.SaveChangesAsync();
+            await _actorRepository.Create(actor);
 
             return CreatedAtAction("GetActor", new { id = actor.Id }, actor);
         }
@@ -87,21 +78,9 @@ namespace Netflix_Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActor(int id)
         {
-            var actor = await _context.MovieActors.FindAsync(id);
-            if (actor == null)
-            {
-                return NotFound();
-            }
-
-            _context.MovieActors.Remove(actor);
-            await _context.SaveChangesAsync();
+            await _actorRepository.Delete(id);
 
             return NoContent();
-        }
-
-        private bool ActorExists(int id)
-        {
-            return _context.MovieActors.Any(e => e.Id == id);
         }
     }
 }

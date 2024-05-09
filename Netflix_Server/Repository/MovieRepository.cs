@@ -1,4 +1,9 @@
-﻿using Netflix_Server.IRepositorys;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Netflix_Server.IRepositorys;
 using Netflix_Server.Models;
 
 namespace Netflix_Server.Repository
@@ -6,44 +11,54 @@ namespace Netflix_Server.Repository
     public class MovieRepository : IRepository<Movie>
     {
         private readonly MovieContext _context;
+
         public MovieRepository(MovieContext context)
         {
             _context = context;
         }
-        public Task Create(Movie item)
+
+        public async Task Create(Movie item)
         {
-            throw new NotImplementedException();
+            await _context.Movies.AddAsync(item);
         }
 
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var movie = await GetById(id);
+            if (movie != null)
+            {
+                _context.Movies.Remove(movie);
+            }
         }
 
-        public Task<Movie> GetById(int id)
+        public async Task<bool> Exists(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Movies.AnyAsync(m => m.Id == id);
         }
 
-        public Task<Movie> GetByName(string name)
+        public async Task<Movie> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Movies.FindAsync(id);
         }
 
-        public Task<List<Movie>> GetList()
+        public async Task<Movie> GetByName(string name)
         {
-            throw new NotImplementedException();
+            return await _context.Movies.FirstOrDefaultAsync(m => m.Title == name);
         }
 
-        public Task Save()
+        public async Task<List<Movie>> GetList()
         {
-            throw new NotImplementedException();
+            return await _context.Movies.ToListAsync();
+        }
+
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
         }
 
         public void Update(Movie item)
         {
-            throw new NotImplementedException();
+            _context.Movies.Update(item);
         }
-
     }
 }

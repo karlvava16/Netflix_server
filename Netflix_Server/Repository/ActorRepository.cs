@@ -1,43 +1,64 @@
-﻿using Netflix_Server.IRepositorys;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Netflix_Server.IRepositorys;
 using Netflix_Server.Models;
 
 namespace Netflix_Server.Repository
 {
     public class ActorRepository : IRepository<Actor>
     {
-        public Task Create(Actor item)
+        private readonly MovieContext _context;
+
+        public ActorRepository(MovieContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task Delete(int id)
+        public async Task Create(Actor item)
         {
-            throw new NotImplementedException();
+            await _context.Actors.AddAsync(item);
         }
 
-        public Task<Actor> GetById(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var actor = await GetById(id);
+            if (actor != null)
+            {
+                _context.Actors.Remove(actor);
+            }
         }
 
-        public Task<Actor> GetByName(string name)
+        public async Task<bool> Exists(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Actors.AnyAsync(a => a.Id == id);
         }
 
-        public Task<List<Actor>> GetList()
+        public async Task<Actor> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Actors.FindAsync(id);
         }
 
-        public Task Save()
+        public async Task<Actor> GetByName(string name)
         {
-            throw new NotImplementedException();
+            return await _context.Actors.FirstOrDefaultAsync(a => a.Name == name);
+        }
+
+        public async Task<List<Actor>> GetList()
+        {
+            return await _context.Actors.ToListAsync();
+        }
+
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
         }
 
         public void Update(Actor item)
         {
-            throw new NotImplementedException();
+            _context.Actors.Update(item);
         }
     }
 }

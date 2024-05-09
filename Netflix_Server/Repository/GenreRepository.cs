@@ -1,43 +1,64 @@
-﻿using Netflix_Server.IRepositorys;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Netflix_Server.IRepositorys;
 using Netflix_Server.Models;
 
 namespace Netflix_Server.Repository
 {
     public class GenreRepository : IRepository<Genre>
     {
-        public Task Create(Genre item)
+        private readonly MovieContext _context;
+
+        public GenreRepository(MovieContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task Delete(int id)
+        public async Task Create(Genre item)
         {
-            throw new NotImplementedException();
+            await _context.Genres.AddAsync(item);
         }
 
-        public Task<Genre> GetById(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var genre = await GetById(id);
+            if (genre != null)
+            {
+                _context.Genres.Remove(genre);
+            }
         }
 
-        public Task<Genre> GetByName(string name)
+        public async Task<bool> Exists(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Genres.AnyAsync(g => g.Id == id);
         }
 
-        public Task<List<Genre>> GetList()
+        public async Task<Genre> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Genres.FindAsync(id);
         }
 
-        public Task Save()
+        public async Task<Genre> GetByName(string name)
         {
-            throw new NotImplementedException();
+            return await _context.Genres.FirstOrDefaultAsync(g => g.Name == name);
+        }
+
+        public async Task<List<Genre>> GetList()
+        {
+            return await _context.Genres.ToListAsync();
+        }
+
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
         }
 
         public void Update(Genre item)
         {
-            throw new NotImplementedException();
+            _context.Genres.Update(item);
         }
     }
 }
