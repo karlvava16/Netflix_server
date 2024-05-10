@@ -10,5 +10,6 @@
         public DateTime? RegistrationDate { get; set; } 
         public PricingPlan? PricingPlan { get; set; }
         public int PricingPlanId { get; set; }
+       
     }
 }
