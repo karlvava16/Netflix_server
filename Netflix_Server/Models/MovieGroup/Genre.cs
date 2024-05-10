@@ -5,6 +5,6 @@
         public int Id { get; set; }
         public int? MovieId { get; set; }
         public string Name { get; set; }
-        public ICollection<Movie>? Movie { get; set; }
+        public virtual ICollection<Movie>? Movie { get; set; }
     }
 }

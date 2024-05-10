@@ -7,6 +7,6 @@
 
         public string Alt { get; set; }
         public string PosterPath { get; set; }
-        public Movie? Movie { get; set; }
+        public virtual Movie? Movie { get; set; }
     }
 }

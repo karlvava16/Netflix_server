@@ -8,7 +8,7 @@
 
         public string Alt { get; set; }
         public string PosterPath { get; set; }
-        public Actor? Actor { get; set; }
+        public virtual Actor? Actor { get; set; }
 
     }
 }
