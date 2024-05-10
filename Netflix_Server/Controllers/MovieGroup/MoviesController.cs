@@ -5,6 +5,7 @@ using Netflix_Server.IRepository;
 using Netflix_Server.Models.MovieGroup;
 using Netflix_Server.Repository;
 using Netflix_Server.Repository.MovieGroup;
+using Netflix_Server.View_Model;
 
 namespace Netflix_Server.Controllers.MovieGroup
 {
@@ -21,9 +22,12 @@ namespace Netflix_Server.Controllers.MovieGroup
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
+        public async Task<ActionResult<IEnumerable<FilteredMovie>>> GetMovies(Filter filter)
         {
-            return await _movieRepository.GetList();
+            var movies = await _movieRepository.GetList(filter);
+            int kol = movies.Count();
+            FilteredMovie fMovie = new FilteredMovie(movies, kol);
+            return Ok(fMovie);
         }
 
         // GET: api/Movies/5
