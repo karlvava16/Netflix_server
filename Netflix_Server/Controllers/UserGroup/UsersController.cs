@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Netflix_Server.Models.Context;
 using Netflix_Server.Models.UserGroup;
 using Netflix_Server.IRepository;
+using Netflix_Server.Services.UserGroup;
+
 
 namespace Netflix_Server.Controllers.UserGroup
 {
@@ -15,10 +17,12 @@ namespace Netflix_Server.Controllers.UserGroup
     public class UsersController : ControllerBase
     {
         private readonly IRepository<User> _repository;
+        private readonly IUserAuthentication _authService;
 
-        public UsersController(IRepository<User> repository)
+        public UsersController(IRepository<User> repository, IUserAuthentication authService)
         {
             _repository = repository;
+            _authService = authService;
         }
 
         // GET: api/Users
@@ -61,12 +65,17 @@ namespace Netflix_Server.Controllers.UserGroup
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> PostUser(string email, string password, int pricingPlanId)
         {
-            await _repository.Create(user);
-            await _repository.Save();
+            var result = await _authService.RegisterUserAsync(email, password, pricingPlanId);  /*Результат либо null, либо user */
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+
+            //await _repository.Create(user);
+            //await _repository.Save();
+
+
+            //return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return Ok(result);
         }
 
         // DELETE: api/Users/5

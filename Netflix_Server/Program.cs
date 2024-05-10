@@ -2,8 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Netflix_Server.IRepository;
 using Netflix_Server.Models.Context;
 using Netflix_Server.Models.MovieGroup;
+using Netflix_Server.Models.UserGroup;
 using Netflix_Server.Repository.MovieGroup;
 using Netflix_Server.Repository.UserGroup;
+using Netflix_Server.Services.PasswordGroup;
+using Netflix_Server.Services.UserGroup;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +26,15 @@ builder.Services.AddScoped<IRepository<Movie>, MovieRepository>();
 builder.Services.AddScoped<IRepository<MovieImage>, MovieImageRepository>();
 builder.Services.AddScoped<IRepository<MovieStatus>, MovieStatusRepository>();
 builder.Services.AddScoped<IRepository<Playback>, PlaybackRepository>();
+
+builder.Services.AddScoped<IRepository<Feature>, FeatureRepository>();
+builder.Services.AddScoped<IRepository<PricingPlan>, PricingPlanRepository>();
+builder.Services.AddScoped<IRepository<User>, UserRepository>();
+
+builder.Services.AddScoped<IUserAuthentication, UserAuthentication>();
+builder.Services.AddScoped<IPasswordHashing, PasswordHashing>();
+
+
 // добавляем контекст ApplicationContext в качестве сервиса в приложение
 builder.Services.AddDbContext<MovieContext>(options => options.UseSqlServer(connection));
 
