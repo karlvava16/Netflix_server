@@ -25,11 +25,11 @@
 
 
 
-        public ICollection<Genre>? Genres { get; set; }
-        public ICollection<MovieImage>? Images { get; set; }
-        public ICollection<Actor>? Actors { get; set; }
+        public virtual ICollection<Genre>? Genres { get; set; }
+        public virtual ICollection<MovieImage>? Images { get; set; }
+        public  virtual ICollection<Actor>? Actors { get; set; }
 
-        public ICollection<Playback>? Playback { get; set; }
+        public virtual ICollection<Playback>? Playback { get; set; }
 
     }
 }

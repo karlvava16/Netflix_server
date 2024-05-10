@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Netflix_Server.IRepository;
 using Netflix_Server.Models.Context;
 using Netflix_Server.Models.MovieGroup;
+using Netflix_Server.View_Model;
 
 namespace Netflix_Server.Repository.MovieGroup
 {
@@ -47,7 +48,7 @@ namespace Netflix_Server.Repository.MovieGroup
             return await _context.Genres.FirstOrDefaultAsync(g => g.Name == name);
         }
 
-        public async Task<List<Genre>> GetList()
+        public async Task<List<Genre>> GetList(Filter filter = null)
         {
             return await _context.Genres.ToListAsync();
         }
@@ -57,9 +58,10 @@ namespace Netflix_Server.Repository.MovieGroup
             await _context.SaveChangesAsync();
         }
 
-        public void Update(Genre item)
+        public Task Update(Genre item)
         {
             _context.Genres.Update(item);
+            return Task.CompletedTask;
         }
     }
 }

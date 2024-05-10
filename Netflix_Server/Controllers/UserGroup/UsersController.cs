@@ -25,7 +25,7 @@ namespace Netflix_Server.Controllers.UserGroup
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-            return await _repository.GetList();
+            return await _repository.GetList(null);
         }
 
         // GET: api/Users/5

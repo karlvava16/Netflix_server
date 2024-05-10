@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Netflix_Server.IRepository;
 using Netflix_Server.Models.Context;
 using Netflix_Server.Models.MovieGroup;
+using Netflix_Server.View_Model;
 
 namespace Netflix_Server.Repository.MovieGroup
 {
@@ -47,7 +48,7 @@ namespace Netflix_Server.Repository.MovieGroup
             return await _context.ActorImages.FirstOrDefaultAsync(ai => ai.Alt == name);
         }
 
-        public async Task<List<ActorImage>> GetList()
+        public async Task<List<ActorImage>> GetList(Filter filter = null)
         {
             return await _context.ActorImages.ToListAsync();
         }
@@ -57,9 +58,10 @@ namespace Netflix_Server.Repository.MovieGroup
             await _context.SaveChangesAsync();
         }
 
-        public void Update(ActorImage item)
+        public Task Update(ActorImage item)
         {
             _context.ActorImages.Update(item);
+            return Task.CompletedTask;
         }
     }
 }

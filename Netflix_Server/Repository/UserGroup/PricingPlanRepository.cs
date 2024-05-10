@@ -3,6 +3,7 @@ using Netflix_Server.Models.UserGroup;
 using Netflix_Server.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Netflix_Server.View_Model;
 
 namespace Netflix_Server.Repository.UserGroup
 {
@@ -46,7 +47,7 @@ namespace Netflix_Server.Repository.UserGroup
             return await _context.PricingPlans.FirstOrDefaultAsync(f => f.Name == name);
         }
 
-        public async Task<List<PricingPlan>> GetList()
+        public async Task<List<PricingPlan>> GetList(Filter filter=null)
         {
             return await _context.PricingPlans.ToListAsync();
         }
@@ -56,7 +57,7 @@ namespace Netflix_Server.Repository.UserGroup
             await _context.SaveChangesAsync();
         }
 
-        public async void Update(PricingPlan item)
+        public async Task Update(PricingPlan item)
         {
             _context.Entry(item).State = EntityState.Modified;
             try
