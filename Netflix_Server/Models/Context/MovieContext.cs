@@ -3,8 +3,6 @@ using Netflix_Server.Models.MovieGroup;
 using Netflix_Server.Models.UserGroup;
 namespace Netflix_Server.Models.Context
 {
-
-
     public class MovieContext : DbContext
     {
         public MovieContext(DbContextOptions<MovieContext> options)
