@@ -10,8 +10,12 @@ namespace Netflix_Server.Models.Context
         public MovieContext(DbContextOptions<MovieContext> options)
             : base(options)
         {
-        }
+            if (Database.EnsureCreated())
+            {
 
+            }
+        }
+        
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<MovieImage> MovieImages { get; set; }
@@ -25,7 +29,5 @@ namespace Netflix_Server.Models.Context
         public DbSet<Feature> Features { get; set; } 
         public DbSet<PricingPlan> PricingPlans { get; set; }
         public DbSet<User> Users { get; set; }
-
     }
-
 }
