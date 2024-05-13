@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Netflix_Server.IRepository;
 using Netflix_Server.Models.MovieGroup;
+using Netflix_Server.Models.UserGroup;
 using Netflix_Server.Repository.MovieGroup;
 
 namespace Netflix_Server.Controllers.MovieGroup
@@ -14,11 +16,11 @@ namespace Netflix_Server.Controllers.MovieGroup
     [ApiController]
     public class ActorImagesController : ControllerBase
     {
-        private readonly ActorImageRepository _actorImageRepository;
+        private readonly IRepository<ActorImage> _actorImageRepository;
 
-        public ActorImagesController(ActorImageRepository context)
+        public ActorImagesController(IRepository<ActorImage> repository)
         {
-            _actorImageRepository = context;
+            _actorImageRepository = repository;
         }
 
         // GET: api/Actors

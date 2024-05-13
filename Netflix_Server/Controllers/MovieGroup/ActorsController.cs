@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Netflix_Server.IRepository;
 using Netflix_Server.Models.MovieGroup;
 using Netflix_Server.Repository.MovieGroup;
 
@@ -14,9 +15,9 @@ namespace Netflix_Server.Controllers.MovieGroup
     [ApiController]
     public class ActorsController : ControllerBase
     {
-        private readonly ActorRepository _actorRepository;
+        private readonly IRepository<Actor> _actorRepository;
 
-        public ActorsController(ActorRepository repo)
+        public ActorsController(IRepository<Actor> repo)
         {
             _actorRepository = repo;
         }

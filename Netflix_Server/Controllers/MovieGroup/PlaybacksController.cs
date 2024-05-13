@@ -12,9 +12,9 @@ namespace Netflix_Server.Controllers.MovieGroup
     [ApiController]
     public class PlaybacksController : ControllerBase
     {
-        private readonly PlaybackRepository _playbackRepository;
+        private readonly IRepository<Playback> _playbackRepository;
 
-        public PlaybacksController(PlaybackRepository playbackRepository)
+        public PlaybacksController(IRepository<Playback> playbackRepository)
         {
             _playbackRepository = playbackRepository;
         }
