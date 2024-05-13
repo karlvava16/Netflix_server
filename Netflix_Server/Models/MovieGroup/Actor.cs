@@ -6,8 +6,5 @@
         public string Name { get; set; }
         public virtual ActorImage ? Images { get; set; }
         public virtual ICollection<Movie>? Movies { get; set; }
-
-
-
     }
 }
