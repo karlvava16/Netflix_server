@@ -82,15 +82,15 @@ namespace Netflix_Server.Controllers.UserGroup
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(string email, string password, int pricingPlanId)
         {
-            var result = await _authService.RegisterUserAsync(email, password, pricingPlanId);  /*Результат либо null, либо user */
-
-
-            //await _repository.Create(user);
-            //await _repository.Save();
-
-
-            //return CreatedAtAction("GetUser", new { id = user.Id }, user);
-            return Ok(result);
+            try
+            {
+                var user = await _authService.RegisterUserAsync(email, password, pricingPlanId);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE: api/Users/5

@@ -49,7 +49,6 @@ namespace Netflix_Server.Services.UserGroup
                 {
                     (string hashedPassword, string salt) = _passwordHashing.HashPasswordAsync(password);
 
-
                     User newUser = new User
                     {
                         Email = email,
@@ -66,11 +65,15 @@ namespace Netflix_Server.Services.UserGroup
 
                     return newUser;
                 }
+                else
+                {
+                    throw new Exception("User with this email is already registered.");
+                }
             }
             catch (Exception ex)
             {
+                throw ex; // Передайте исключение выше для обработки в контроллере
             }
-            return null;
         }
     }
 }
