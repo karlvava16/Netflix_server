@@ -8,6 +8,7 @@ using Netflix_Server.Models.Context;
 using Netflix_Server.Models.UserGroup;
 using Netflix_Server.IRepository;
 using Netflix_Server.Services.UserGroup;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 
 namespace Netflix_Server.Controllers.UserGroup
@@ -37,21 +38,6 @@ namespace Netflix_Server.Controllers.UserGroup
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _repository.GetById(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return user;
-        }
-
-
-        // GET: api/Users/5
-        [HttpGet("email/{email}")]
-        public async Task<ActionResult<User>> GetUserByEmail(string email)
-        {
-            var user = await _repository.GetById(1);
 
             if (user == null)
             {
@@ -91,6 +77,48 @@ namespace Netflix_Server.Controllers.UserGroup
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+
+        //[HttpPost("login")]
+        //public async Task<ActionResult<User>> Login(string email, string password)
+        //{
+        //    try
+        //    {
+        //        var user = await _authService.AuthenticateUserAsync(email, password);
+        //        return Ok(user);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(new { message = ex.Message });
+        //    }
+        //}
+
+        [Route("auth/login")]
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var user = await _authService.AuthenticateUserAsync(model.Email, model.Password);
+                    return Ok(user);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { message = ex.Message });
+                }
+            }
+
+            return BadRequest(ModelState);
+        }
+
+
+        public class LoginModel
+        {
+            public string Email { get; set; }
+            public string Password { get; set; }
         }
 
         // DELETE: api/Users/5
