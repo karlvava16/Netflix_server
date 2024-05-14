@@ -1,4 +1,6 @@
-﻿namespace Netflix_Server.Models.MovieGroup
+﻿using System.Text.Json.Serialization;
+
+namespace Netflix_Server.Models.MovieGroup
 {
     public class MovieImage
     {
@@ -7,6 +9,7 @@
 
         public string Alt { get; set; }
         public string PosterPath { get; set; }
+        [JsonIgnore]
         public virtual Movie? Movie { get; set; }
     }
 }

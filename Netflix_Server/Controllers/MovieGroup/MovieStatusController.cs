@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Netflix_Server.IRepository;
 using Netflix_Server.Models.MovieGroup;
 using Netflix_Server.Repository.MovieGroup;
 
@@ -11,9 +12,9 @@ namespace Netflix_Server.Controllers.MovieGroup
     [ApiController]
     public class MovieStatusController : ControllerBase
     {
-        private readonly MovieStatusRepository _MovieStatusRepository;
+        private readonly IRepository<MovieStatus> _MovieStatusRepository;
 
-        public MovieStatusController(MovieStatusRepository movieStatusRepository)
+        public MovieStatusController(IRepository<MovieStatus> movieStatusRepository)
         {
             _MovieStatusRepository = movieStatusRepository;
         }

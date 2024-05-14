@@ -13,21 +13,29 @@ namespace Netflix_Server.Controllers.MovieGroup
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        private readonly MovieRepository _movieRepository;
+        private readonly IRepository<Movie> _movieRepository;
 
-        public MoviesController(MovieRepository movieRepository)
+        public MoviesController(IRepository<Movie> movieRepository)
         {
             _movieRepository = movieRepository;
         }
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FilteredMovie>>> GetMovies(Filter filter)
+        public async Task<ActionResult<IEnumerable<FilteredMovie>>> GetMovies(Filter filter=null)
         {
-            var movies = await _movieRepository.GetList(filter);
-            int kol = movies.Count();
-            FilteredMovie fMovie = new FilteredMovie(movies, kol);
-            return Ok(fMovie);
+            try
+            {
+                var movies = await _movieRepository.GetList(filter);
+                int kol = movies.Count();
+                
+                FilteredMovie fMovie = new FilteredMovie(movies, kol);
+                return Ok(fMovie);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET: api/Movies/5

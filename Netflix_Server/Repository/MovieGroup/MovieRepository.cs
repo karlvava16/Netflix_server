@@ -76,7 +76,12 @@ namespace Netflix_Server.Repository.MovieGroup
             }
 
 
-            return await query.ToListAsync();
+          return await query.Include(x => x.Genres)
+                  .Include(x => x.Images)
+                  .Include(x => x.Actors)
+                  .Include(x => x.Playback)
+                  .ToListAsync();
+
 
         }
 

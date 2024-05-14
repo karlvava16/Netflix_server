@@ -13,9 +13,9 @@ namespace Netflix_Server.Controllers.MovieGroup
     [ApiController]
     public class MovieImagesController : ControllerBase
     {
-        private readonly MovieImageRepository _movieImageRepository;
+        private readonly IRepository<MovieImage> _movieImageRepository;
 
-        public MovieImagesController(MovieImageRepository movieImageRepository)
+        public MovieImagesController(IRepository<MovieImage> movieImageRepository)
         {
             _movieImageRepository = movieImageRepository;
         }

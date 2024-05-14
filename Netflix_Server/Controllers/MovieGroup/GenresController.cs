@@ -13,9 +13,9 @@ namespace Netflix_Server.Controllers.MovieGroup
     [ApiController]
     public class GenresController : ControllerBase
     {
-        private readonly GenreRepository _genreRepository;
+        private readonly IRepository<Genre> _genreRepository;
 
-        public GenresController(GenreRepository genreRepository)
+        public GenresController(IRepository<Genre> genreRepository)
         {
             _genreRepository = genreRepository;
         }

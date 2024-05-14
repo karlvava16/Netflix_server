@@ -9,7 +9,7 @@ namespace Netflix_Server.View_Model
             maxFilteredFilms=max;
         
         }
-        List<Movie> filteredMovies {  get; set; }
+        public List<Movie> filteredMovies {  get; set; }
 
         public int maxFilteredFilms {  get; set; }
 
