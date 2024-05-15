@@ -1,6 +1,6 @@
-﻿namespace Netflix_Server.Models.UserGroup
+﻿namespace Netflix_Server.Models.MovieGroup
 {
-    public class Feature
+    public class Remark
     {
         public int Id { get; set; }
         public string Name { get; set; }
