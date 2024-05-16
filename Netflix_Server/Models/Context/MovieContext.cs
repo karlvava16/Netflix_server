@@ -15,6 +15,56 @@ namespace Netflix_Server.Models.Context
             //Database.EnsureDeleted();
             if (Database.EnsureCreated())
             {
+                List<PricingPlan> plans = new List<PricingPlan>()
+                {
+                    new PricingPlan
+                    {
+                        Name = "Premium",
+                        Price = 9.99m, // Убедитесь, что цена указана без символа валюты
+                        Period = "/ month",
+                        Description = "4K (Ultra HD) + HDR",
+                        Features = new List<Feature>
+                        {
+                            new Feature{Name = "Video and sound quality: Best"},
+                            new Feature{Name = "Supported devices: TV, computer, mobile phone, tablet" },
+                            new Feature{Name = "Devices your household can watch at the same time: 4" },
+                            new Feature{Name = "Download devices: 6" }
+                        }
+                    },
+                    new PricingPlan
+                    {
+                        Name = "Standard",
+                        Price = 7.49m,
+                        Period = "/ month",
+                        Description = "1080p (Full HD)",
+                        Features = new List<Feature>
+                        {
+                            new Feature{Name = "Video and sound quality: Great"},
+                            new Feature{Name = "Supported devices: TV, computer, mobile phone, tablet" },
+                            new Feature{Name = "Devices your household can watch at the same time: 2" },
+                            new Feature{Name = "Download devices: 2" }
+                        }
+                    },
+                    new PricingPlan
+                    {
+                        Name = "Basic",
+                        Price = 4.99m,
+                        Period = "/ month",
+                        Description = "720p (HD)",
+                        Features = new List<Feature>
+                        {
+                            new Feature{Name = "Video and sound quality: Good"},
+                            new Feature{Name = "Supported devices: TV, computer, mobile phone, tablet" },
+                            new Feature{Name = "Devices your household can watch at the same time: 1" },
+                            new Feature{Name = "Download devices: 1" }
+                        }
+                    }
+                };
+
+                PricingPlans.AddRange(plans);
+                SaveChanges();
+
+
 
 
 
