@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Netflix_Server.Models.MovieGroup;
+using Netflix_Server.Models.UserGroup;
 using System.Reflection.Emit;
 
 namespace Netflix_Server.Models.Context
@@ -14,6 +15,9 @@ namespace Netflix_Server.Models.Context
             //Database.EnsureDeleted();
             if (Database.EnsureCreated())
             {
+
+
+
                 List<Image> images = new List<Image>() {
                     new Image {ImageUrl = "https://images.unsplash.com/photo-1467703834117-04386e3dadd8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", Alt = "Image 1" },
                     new Image {ImageUrl = "https://images.unsplash.com/photo-1489447068241-b3490214e879?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", Alt = "Image 2" },
@@ -133,6 +137,12 @@ namespace Netflix_Server.Models.Context
         public DbSet<DirectorImage> DirectorImages { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyImage> CompanyImages { get; set; }
+
+
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet<PricingPlan> PricingPlans { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
