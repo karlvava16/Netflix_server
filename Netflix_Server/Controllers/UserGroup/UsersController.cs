@@ -80,19 +80,27 @@ namespace Netflix_Server.Controllers.UserGroup
         }
 
 
-        //[HttpPost("login")]
-        //public async Task<ActionResult<User>> Login(string email, string password)
-        //{
-        //    try
-        //    {
-        //        var user = await _authService.AuthenticateUserAsync(email, password);
-        //        return Ok(user);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new { message = ex.Message });
-        //    }
-        //}
+
+        [Route("auth/register")]
+        [HttpPost]
+        public async Task<ActionResult<User>> Register([FromBody] RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var user = await _authService.RegisterUserAsync(model.Email, model.Password, Convert.ToInt32(model.PricingPlanId));
+                    return Ok(user);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { message = ex.Message });
+                }
+            }
+
+            return BadRequest(ModelState);
+        }
+
 
         [Route("auth/login")]
         [HttpPost]
@@ -119,6 +127,12 @@ namespace Netflix_Server.Controllers.UserGroup
         {
             public string Email { get; set; }
             public string Password { get; set; }
+        }
+        public class RegisterModel
+        {
+            public string Email { get; set; }
+            public string Password { get; set; }
+            public string PricingPlanId { get; set; }  
         }
 
         // DELETE: api/Users/5
