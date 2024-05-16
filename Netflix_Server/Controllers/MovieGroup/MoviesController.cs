@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Netflix_Server.Models.Context;
 using Netflix_Server.Models.MovieGroup;
 using Netflix_Server.Models.MovieGroupDto;
+using Netflix_Server.Repository;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -12,13 +13,11 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 [Route("api/[controller]")]
 public class MoviesController : ControllerBase
 {
-    private readonly MovieContext _context;
-    private readonly IMapper _mapper;
+    private readonly IMovieRepository _movieRep;
 
-    public MoviesController(MovieContext context, IMapper mapper)
+    public MoviesController(MovieContext context, IMapper mapper, IMovieRepository movieRepository)
     {
-        _context = context;
-        _mapper = mapper;
+        _movieRep = movieRepository;
     }
 
     [HttpPost]
@@ -28,104 +27,49 @@ public class MoviesController : ControllerBase
         {
             return BadRequest();
         }
-
-        var movie = _mapper.Map<Movie>(movieDto);
-        movie.Id = default;
-
-        await _context.Movies.AddAsync(movie);
-        await _context.SaveChangesAsync();
-
-        return Ok(_mapper.Map<MovieDto>(movie));
+        try
+        {
+            MovieDto movie = await _movieRep.AddMovie(movieDto);
+            return Ok(movie);
+        }
+        catch
+        {
+            return BadRequest();
+        }
     }
+
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
     {
-        var movies = await _context.Movies
-            .Include(m => m.MovieImages)
-                .ThenInclude(a => a.Image)
-            .Include(m => m.Remark)
-            .Include(m => m.Rating)
-            .Include(m => m.Genres)
-            .Include(m => m.Actors)
-                .ThenInclude(a => a.ActorImages)
-                    .ThenInclude(a => a.Image)
-            .Include(m => m.Director)
-                .ThenInclude(a => a.DirectorImages)
-                    .ThenInclude(a => a.Image)
-            .Include(m => m.Company)
-                .ThenInclude(a => a.CompanyImages)
-                    .ThenInclude(a => a.Image)
-            .ToListAsync();
-
-        var movieDtos = _mapper.Map<IEnumerable<MovieDto>>(movies);
+        var movieDtos = await _movieRep.GetMovies();
         return Ok(movieDtos);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<MovieDto>> GetMovieById(int id)
     {
-        var movie = await _context.Movies
-            .Include(m => m.MovieImages)
-                .ThenInclude(a => a.Image)
-            .Include(m => m.Remark)
-            .Include(m => m.Rating)
-            .Include(m => m.Genres)
-            .Include(m => m.Actors)
-            .Include(m => m.Actors)
-                .ThenInclude(a => a.ActorImages)
-                    .ThenInclude(a => a.Image)
-            .Include(m => m.Director)
-                .ThenInclude(a => a.DirectorImages)
-                    .ThenInclude(a => a.Image)
-            .Include(m => m.Company)
-                .ThenInclude(a => a.CompanyImages)
-                    .ThenInclude(a => a.Image)
-            .FirstOrDefaultAsync(m => m.Id == id);
-
-        if (movie == null)
-        {
-            return NotFound();
-        }
-
-        var movieDto = _mapper.Map<MovieDto>(movie);
-        return Ok(movieDto);
+        var movieDto = await _movieRep.GetMovieById(id);
+        return movieDto == null ? NotFound() : Ok(movieDto);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateMovie(int id, [FromBody] MovieDto movieDto)
     {
-        if (id != movieDto.Id || movieDto == null)
-        {
-            return BadRequest();
-        }
+        if (movieDto == null || movieDto.Id != id) return BadRequest();
+        var updatedMovie = await _movieRep.UpdateMovie(movieDto);
 
-        var movie = await _context.Movies.FindAsync(id);
-        if (movie == null)
-        {
-            return NotFound();
-        }
-
-        _mapper.Map(movieDto, movie);
-
-        _context.Movies.Update(movie);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
+        return updatedMovie == null ? BadRequest() : Ok(updatedMovie);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMovie(int id)
     {
-        var movie = await _context.Movies.FindAsync(id);
-        if (movie == null)
+        if (await _movieRep.RemoveMovieById(id))
         {
-            return NotFound();
+            return Ok();
         }
 
-        _context.Movies.Remove(movie);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
+        return BadRequest();
     }
 }

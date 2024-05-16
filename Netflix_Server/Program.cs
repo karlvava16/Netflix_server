@@ -1,12 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Netflix_Server.IRepository;
 using Netflix_Server.Models.Context;
+using Netflix_Server.Repository;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
 
 
 
@@ -22,17 +24,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
-});
 
 var app = builder.Build();
 
-app.UseCors("AllowAll");
+app.UseCors(builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
 
 
 if (app.Environment.IsDevelopment())

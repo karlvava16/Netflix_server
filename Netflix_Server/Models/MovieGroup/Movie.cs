@@ -8,7 +8,7 @@ namespace Netflix_Server.Models.MovieGroup
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public virtual ICollection<MovieImage> MovieImages { get; set; }
+        public virtual ICollection<MovieImage>? MovieImages { get; set; }
         public string Description { get; set; }
         public int RemarkId { get; set; }
         public virtual Remark Remark { get; set; }

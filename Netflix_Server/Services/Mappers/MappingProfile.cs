@@ -19,7 +19,7 @@ namespace Netflix_Server.Services.Mappers
 
             CreateMap<ActorDto, Actor>()
                 .ForMember(dest => dest.ActorImages, opt => opt
-                .MapFrom(src => src.Images.Select(imageDto => new ActorImage { ImageId = imageDto.Id, ActorId = src.Id })));
+                .MapFrom(src => src.Images.Select(imageDto => new ActorImage { ActorId = src.Id })));
 
 
             CreateMap<Director, DirectorDto>()
@@ -27,7 +27,7 @@ namespace Netflix_Server.Services.Mappers
 
             CreateMap<DirectorDto, Director>()
                 .ForMember(dest => dest.DirectorImages, opt => opt
-                .MapFrom(src => src.Images.Select(imageDto => new DirectorImage { ImageId = imageDto.Id, DirectorId = src.Id })));
+                .MapFrom(src => src.Images.Select(imageDto => new DirectorImage { DirectorId = src.Id })));
 
 
             CreateMap<Company, CompanyDto>()
@@ -35,7 +35,7 @@ namespace Netflix_Server.Services.Mappers
 
             CreateMap<CompanyDto, Company>()
                 .ForMember(dest => dest.CompanyImages, opt => opt
-                .MapFrom(src => src.Images.Select(imageDto => new CompanyImage { ImageId = imageDto.Id, CompanyId = src.Id })));
+                .MapFrom(src => src.Images.Select(imageDto => new CompanyImage { CompanyId = src.Id })));
 
 
             CreateMap<Movie, MovieDto>()
@@ -43,7 +43,7 @@ namespace Netflix_Server.Services.Mappers
 
             CreateMap<MovieDto, Movie>()
                 .ForMember(dest => dest.MovieImages, opt => opt
-                .MapFrom(src => src.Images.Select(imageDto => new MovieImage { ImageId = imageDto.Id, MovieId = src.Id })));
+                .MapFrom(src => src.Images.Select(imageDto => new MovieImage { MovieId = src.Id })));
         }
     }
 }

@@ -59,7 +59,7 @@ public class ImagesController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateImage(int id, [FromBody] ImageDto imageDto)
     {
-        if (id != imageDto.Id || imageDto == null)
+        if (imageDto == null)
         {
             return BadRequest();
         }

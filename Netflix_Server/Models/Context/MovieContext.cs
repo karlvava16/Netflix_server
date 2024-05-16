@@ -161,23 +161,21 @@ namespace Netflix_Server.Models.Context
                 .HasForeignKey(m => m.CompanyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
             // ACTOR IMAGE
             modelBuilder.Entity<ActorImage>()
-                    .HasKey(ai => new { ai.ActorId, ai.ImageId }); // Определяем составной ключ
+                    .HasKey(ai => new { ai.ActorId, ai.ImageId });
 
             modelBuilder.Entity<ActorImage>()
-                .HasOne(ai => ai.Actor) // Указываем связь с актером
-                .WithMany(a => a.ActorImages) // Один актер может иметь много изображений
-                .HasForeignKey(ai => ai.ActorId) // Внешний ключ для актера
+                .HasOne(ai => ai.Actor)
+                .WithMany(a => a.ActorImages)
+                .HasForeignKey(ai => ai.ActorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ActorImage>()
-                .HasOne(ai => ai.Image) // Указываем связь с изображением
-                .WithMany() // Одно изображение может быть связано с несколькими актерами
-                .HasForeignKey(ai => ai.ImageId) // Внешний ключ для изображения
+                .HasOne(ai => ai.Image)
+                .WithMany()
+                .HasForeignKey(ai => ai.ImageId)
                 .OnDelete(DeleteBehavior.Restrict);
-
 
             // COMPANY IMAGE
             modelBuilder.Entity<CompanyImage>()
@@ -194,7 +192,6 @@ namespace Netflix_Server.Models.Context
                 .WithMany()
                 .HasForeignKey(ai => ai.ImageId)
                 .OnDelete(DeleteBehavior.Restrict);
-
 
             // DIRECTOR IMAGE
             modelBuilder.Entity<DirectorImage>()
@@ -220,9 +217,9 @@ namespace Netflix_Server.Models.Context
                 .HasOne(ai => ai.Movie)
                 .WithMany(a => a.MovieImages)
                 .HasForeignKey(ai => ai.MovieId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade); // Changed to Cascade
 
-            modelBuilder.Entity<DirectorImage>()
+            modelBuilder.Entity<MovieImage>()
                 .HasOne(ai => ai.Image)
                 .WithMany()
                 .HasForeignKey(ai => ai.ImageId)
