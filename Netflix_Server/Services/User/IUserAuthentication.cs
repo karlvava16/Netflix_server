@@ -6,5 +6,6 @@ namespace Netflix_Server.Services.UserGroup
     {
         Task<User?> AuthenticateUserAsync(string email, string password);
         Task<User?> RegisterUserAsync(string email, string password, int pricingPlanId);
+        Task<bool> IsEmailNotExist(string email);
     }
 }

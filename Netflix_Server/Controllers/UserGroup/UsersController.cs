@@ -9,6 +9,7 @@ using Netflix_Server.Models.UserGroup;
 using Netflix_Server.IRepository;
 using Netflix_Server.Services.UserGroup;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace Netflix_Server.Controllers.UserGroup
@@ -123,18 +124,38 @@ namespace Netflix_Server.Controllers.UserGroup
         }
 
 
-        public class LoginModel
+        [Route("auth/check-email")]
+        [HttpPost]
+        public async Task<IActionResult> CheckEmail([FromBody] EmailRequest request)
         {
-            public string Email { get; set; }
-            public string Password { get; set; }
-        }
-        public class RegisterModel
-        {
-            public string Email { get; set; }
-            public string Password { get; set; }
-            public string PricingPlanId { get; set; }  
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var response = await _authService.IsEmailNotExist(request.Email);
+
+                    if (response)
+                    {
+                        return Ok(response);
+                    }
+                    else
+                    {
+                        return BadRequest(new { message = "User with this email is already registered." });
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { message = ex.Message });
+                }
+            }
+
+            return BadRequest(ModelState);
         }
 
+        
+
+        
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)

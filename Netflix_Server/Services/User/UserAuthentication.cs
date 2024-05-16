@@ -31,13 +31,18 @@ namespace Netflix_Server.Services.UserGroup
                         return user;
                     }
                 }
+                else
+                {
+                    throw new Exception("Email or password is incorrect.");
+                }
 
                 return null;
             }
             catch (Exception ex)
             {
+                throw ex; // Передайте исключение выше для обработки в контроллере
             }
-            return null;
+            //return null;
         }
         public async Task<User?> RegisterUserAsync(string email, string password, int pricingPlanId)
         {
@@ -73,6 +78,24 @@ namespace Netflix_Server.Services.UserGroup
             catch (Exception ex)
             {
                 throw ex; // Передайте исключение выше для обработки в контроллере
+            }
+        }
+
+        public async Task<bool> IsEmailNotExist(string email)
+        {
+            try
+            {
+                User user = await _dbContext.Users.FirstOrDefaultAsync(f => f.Email == email);
+
+                if (user == null)
+                {
+                    return true;
+                }
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }
