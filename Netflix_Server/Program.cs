@@ -1,9 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Netflix_Server.IRepository;
 using Netflix_Server.Models.Context;
-using Netflix_Server.Models.MovieGroup;
 using Netflix_Server.Models.UserGroup;
-using Netflix_Server.Repository.MovieGroup;
 using Netflix_Server.Repository.UserGroup;
 using Netflix_Server.Services.PasswordGroup;
 using Netflix_Server.Services.UserGroup;
@@ -16,16 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 string? connection = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddScoped<IRepository<Actor>, ActorRepository>();
-builder.Services.AddScoped<IRepository<ActorImage>, ActorImageRepository>();
-builder.Services.AddScoped<IRepository<Genre>, GenreRepository>();
-builder.Services.AddScoped<IRepository<Movie>, MovieRepository>();
-
-
-
-builder.Services.AddScoped<IRepository<MovieImage>, MovieImageRepository>();
-builder.Services.AddScoped<IRepository<MovieStatus>, MovieStatusRepository>();
-builder.Services.AddScoped<IRepository<Playback>, PlaybackRepository>();
 
 builder.Services.AddScoped<IRepository<Feature>, FeatureRepository>();
 builder.Services.AddScoped<IRepository<PricingPlan>, PricingPlanRepository>();

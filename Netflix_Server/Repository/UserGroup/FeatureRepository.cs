@@ -3,7 +3,6 @@ using Netflix_Server.Models.UserGroup;
 using Netflix_Server.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Netflix_Server.View_Model;
 
 namespace Netflix_Server.Repository.UserGroup
 {
@@ -47,7 +46,7 @@ namespace Netflix_Server.Repository.UserGroup
             return await _context.Features.FirstOrDefaultAsync(f => f.Name == name);
         }
 
-        public async Task<List<Feature>> GetList(Filter filter = null)
+        public async Task<List<Feature>> GetList()
         {
             return await _context.Features.ToListAsync();
         }

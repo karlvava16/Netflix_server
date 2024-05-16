@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Netflix_Server.Models.UserGroup;
 using Netflix_Server.Models.Context;
-using Netflix_Server.Models.MovieGroup;
 using Netflix_Server.Services.PasswordGroup;
 
 namespace Netflix_Server.Services.UserGroup
@@ -62,7 +61,7 @@ namespace Netflix_Server.Services.UserGroup
                         PasswordSalt = salt,
                         RegistrationDate = DateTime.Now,
                         PricingPlanId = pricingPlanId,
-                        WatchedMovies = new List<Movie>(),
+                        //WatchedMovies = new List<Movie>(),
                     };
 
                     _dbContext.Users.Add(newUser);

@@ -1,6 +1,4 @@
-﻿using Netflix_Server.Models.MovieGroup;
-
-namespace Netflix_Server.Models.UserGroup
+﻿namespace Netflix_Server.Models.UserGroup
 {
     public class PricingPlan
     {

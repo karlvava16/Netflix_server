@@ -31,7 +31,7 @@ namespace Netflix_Server.Controllers.UserGroup
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-            return await _repository.GetList(null);
+            return await _repository.GetList();
         }
 
         // GET: api/Users/5
@@ -80,6 +80,15 @@ namespace Netflix_Server.Controllers.UserGroup
             }
         }
 
+        // DELETE: api/Users/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            await _repository.Delete(id);
+            await _repository.Save();
+
+            return NoContent();
+        }
 
 
         [Route("auth/register")]
@@ -151,19 +160,6 @@ namespace Netflix_Server.Controllers.UserGroup
             }
 
             return BadRequest(ModelState);
-        }
-
-        
-
-        
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            await _repository.Delete(id);
-            await _repository.Save();
-
-            return NoContent();
         }
     }
 }
