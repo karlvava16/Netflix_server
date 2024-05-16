@@ -91,6 +91,7 @@ namespace Netflix_Server.Controllers.UserGroup
         }
 
 
+
         [Route("auth/register")]
         [HttpPost]
         public async Task<ActionResult<User>> Register([FromBody] RegisterModel model)
