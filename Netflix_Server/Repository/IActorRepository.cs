@@ -176,25 +176,16 @@ namespace Netflix_Server.Repository
 
             existingActor.Name = dto.Name;
 
-            // Update images
-            if (dto.Images != null)
+            if (dto.Images?.Any() == true)
             {
-                // Remove existing images
-                var existingImageIds = existingActor.ActorImages.Select(ai => ai.ImageId).ToList();
-                var imagesToRemove = existingActor.ActorImages.Where(ai => !dto.Images.Select(i => i.Id).Contains(ai.ImageId)).ToList();
-                foreach (var imageToRemove in imagesToRemove)
+                var imagesToReplace = dto.Images.Where(i => i.Id != null);
+                foreach (var image in imagesToReplace)
                 {
-                    existingActor.ActorImages.Remove(imageToRemove);
-                }
-
-                // Add new images
-                var imagesToAdd = dto.Images.Where(i => i.Id.HasValue && !existingImageIds.Contains(i.Id.Value)).ToList();
-                foreach (var imageDto in imagesToAdd)
-                {
-                    var image = await _context.Images.FindAsync(imageDto.Id.Value);
-                    if (image != null)
+                    var img = await _context.Images.FirstAsync(x => x.Id == image.Id);
+                    if (img != null)
                     {
-                        existingActor.ActorImages.Add(new ActorImage { ActorId = existingActor.Id, ImageId = image.Id });
+                        img.Alt = image.Alt;
+                        img.ImageUrl = image.ImageUrl;
                     }
                 }
             }
