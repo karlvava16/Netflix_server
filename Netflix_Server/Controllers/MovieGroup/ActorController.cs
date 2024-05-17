@@ -50,6 +50,8 @@ public class ActorsController : ControllerBase
         }
     }
 
+
+    //updateActor
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateActor(int id, [FromBody] ActorDto actorDto)
     {
